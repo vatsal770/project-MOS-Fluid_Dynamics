@@ -1,0 +1,1458 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     56859,       1450]
+NotebookOptionsPosition[     55405,       1416]
+NotebookOutlinePosition[     55776,       1432]
+CellTagsIndexPosition[     55733,       1429]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["ES 221: Mechanics of Solids Project Code", "Title",
+ CellChangeTimes->{
+  3.921813655569579*^9, {3.921813715376959*^9, 
+   3.9218137304983716`*^9}},ExpressionUUID->"8925dade-7544-4dd7-a368-\
+98e123a32d44"],
+
+Cell["Submitted to Professor Harmeet Singh", "Subtitle",
+ CellChangeTimes->{{3.9218136977839756`*^9, 
+  3.92181371384277*^9}},ExpressionUUID->"86db4901-dd34-4bc7-aee7-\
+bf03b2b28eff"],
+
+Cell["\<\
+Analysis of Stress distribution of a torsional bar fixed between 2 rigid ends.
+
+In this problem, we take a torsional bar of Length \[OpenCurlyQuote]L\
+\[CloseCurlyQuote] and radius \[OpenCurlyQuote]R\[CloseCurlyQuote] and apply \
+an External moment \[OpenCurlyQuote]Mt\[CloseCurlyQuote] at a position \
+\[OpenCurlyQuote]a\[CloseCurlyQuote]. We then try to analyze the stress \
+distribution at any general 2D element at (r,\[Theta],z) using Mohr\
+\[CloseCurlyQuote]s Circle and also through visual depiction.
+
+Group 9 Team:
+- Abhinav Singh Yadav(22110011)
+- Aditya Prasad(22110018)
+- Pranav Kamboj(22110198)
+- Sanjay Gangotri (22110231)
+- Vatsal Trivedi(22110276)
+\
+\>", "Chapter",
+ CellChangeTimes->{
+  3.921813680640916*^9, {3.9218140601352673`*^9, 
+   3.921814101275342*^9}},ExpressionUUID->"b5f51786-802c-4f25-90f8-\
+f706d9133525"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Depiction of the Moment on the Torsional bar and Mohr\[CloseCurlyQuote]s \
+Circle\
+\>", "Chapter",
+ CellChangeTimes->{{3.9218137743292756`*^9, 
+  3.921813777402264*^9}},ExpressionUUID->"18d71db3-7856-4dbc-a731-\
+03aa97548536"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"L", " ", "=", " ", "1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"R", " ", "=", " ", "0.1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"E", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"200", "e"}], "+", "9"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"G", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"80", "e"}], "+", "9"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"bar", " ", "=", " ", 
+   RowBox[{"Rectangle", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", " ", "0"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"L", ",", " ", 
+       RowBox[{"2", " ", "R"}]}], "}"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"l", " ", "=", " ", 
+    RowBox[{"Line", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"0", ",", " ", "R"}], "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"L", ",", " ", "R"}], "}"}]}], "}"}], "]"}]}], ";"}], "\n", 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"\[Sigma]\[Theta]", "=", "0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"\[Sigma]z", "=", "0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Iz", " ", "=", " ", 
+   RowBox[{"\[Pi]", "*", 
+    RowBox[{
+     RowBox[{"R", "^", "4"}], "/", "2"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"center", "[", 
+    RowBox[{"\[Sigma]\[Theta]", ",", "\[Sigma]z"}], "]"}], ":=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"\[Sigma]\[Theta]", "+", "\[Sigma]z"}], ")"}], "/", "2"}], ",",
+      "0"}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"radius", "[", 
+    RowBox[{"\[Sigma]\[Theta]", ",", "\[Sigma]z", ",", "\[Tau]\[Theta]z_"}], 
+    "]"}], ":=", 
+   RowBox[{"Sqrt", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"\[Sigma]\[Theta]", "-", "\[Sigma]z"}], ")"}], "/", "2"}], 
+       ")"}], "^", "2"}], "+", 
+     RowBox[{"\[Tau]\[Theta]z", "^", "2"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[Sigma]\[Theta]R", "[", 
+    RowBox[{
+    "\[Sigma]\[Theta]", ",", "\[Sigma]z", ",", "\[Tau]\[Theta]z_", ",", 
+     "\[Theta]_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"\[Sigma]\[Theta]", "+", "\[Sigma]z"}], ")"}], "/", "2"}], "+", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"\[Sigma]\[Theta]", "-", "\[Sigma]z"}], ")"}], "/", "2"}], " ", 
+     RowBox[{"Cos", "[", 
+      RowBox[{"2", "\[Theta]"}], "]"}]}], "+", 
+    RowBox[{"\[Tau]\[Theta]z", "*", 
+     RowBox[{"Sin", "[", 
+      RowBox[{"2", "\[Theta]"}], "]"}]}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[Sigma]zR", "[", 
+    RowBox[{
+    "\[Sigma]\[Theta]", ",", "\[Sigma]z", ",", "\[Tau]\[Theta]z_", ",", 
+     "\[Theta]_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"\[Sigma]\[Theta]", "+", "\[Sigma]z"}], ")"}], "/", "2"}], "-", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"\[Sigma]\[Theta]", "-", "\[Sigma]z"}], ")"}], "/", "2"}], " ", 
+     RowBox[{"Cos", "[", 
+      RowBox[{"2", "\[Theta]"}], "]"}]}], "-", 
+    RowBox[{"\[Tau]\[Theta]z", "*", 
+     RowBox[{"Sin", "[", 
+      RowBox[{"2", "\[Theta]"}], "]"}]}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"\[Tau]\[Theta]zR", "[", 
+     RowBox[{
+     "\[Sigma]\[Theta]", ",", "\[Sigma]z", ",", "\[Tau]\[Theta]z_", ",", 
+      "\[Theta]_"}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"\[Sigma]\[Theta]", "-", "\[Sigma]z"}], ")"}], "/", "2"}], 
+        ")"}]}], 
+      RowBox[{"Sin", "[", 
+       RowBox[{"2", "\[Theta]"}], "]"}]}], "+", 
+     RowBox[{"\[Tau]\[Theta]z", "*", 
+      RowBox[{"Cos", "[", 
+       RowBox[{"2", "\[Theta]"}], "]"}]}]}]}], ";"}], "\n", "\n", 
+  "\n"}], "\n", 
+ RowBox[{"Manipulate", "[", "\n", " ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Mvector", " ", "=", " ", 
+     RowBox[{"Arrow", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"a", ",", " ", 
+          RowBox[{
+           RowBox[{"Mt", "/", "50"}], " ", "+", " ", 
+           RowBox[{"2", "*", "R"}]}]}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"a", ",", " ", 
+          RowBox[{"2", "*", "R"}]}], "}"}]}], "}"}], "]"}]}], ";", "\n", "  ", 
+    RowBox[{"Mvector1", " ", "=", " ", 
+     RowBox[{"Arrow", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"a", ",", " ", 
+          RowBox[{
+           RowBox[{"Mt", "/", "50"}], " ", "+", " ", 
+           RowBox[{"2", "*", "R"}]}]}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"a", ",", " ", 
+          RowBox[{"1.5", "*", "R"}]}], "}"}]}], "}"}], "]"}]}], ";", "\n", 
+    " ", 
+    RowBox[{"t", " ", "=", " ", 
+     RowBox[{"Text", "[", 
+      RowBox[{
+       RowBox[{"Style", "[", 
+        RowBox[{
+         RowBox[{"\"\<Mt=\>\"", " ", "<>", " ", 
+          RowBox[{"ToString", "[", "Mt", "]"}]}], ",", " ", "14", ",", " ", 
+         "Red"}], "]"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"a", " ", "+", " ", "0.17"}], ",", " ", 
+         RowBox[{
+          RowBox[{"2", "*", "R"}], " ", "+", " ", "0.1"}]}], "}"}]}], "]"}]}],
+     ";", "\n", "\n", " ", 
+    RowBox[{"t0", " ", "=", " ", 
+     RowBox[{"Text", "[", 
+      RowBox[{
+       RowBox[{"Style", "[", 
+        RowBox[{
+         RowBox[{"\"\<a=\>\"", " ", "<>", " ", 
+          RowBox[{"ToString", "[", "a", "]"}]}], ",", " ", "14", ",", " ", 
+         "Red"}], "]"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"a", "/", "2"}], ",", " ", 
+         RowBox[{
+          RowBox[{"2", "*", "R"}], " ", "+", " ", "0.05"}]}], "}"}]}], 
+      "]"}]}], ";", "\n", " ", 
+    RowBox[{"ldash5", " ", "=", " ", 
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", " ", 
+          RowBox[{
+           RowBox[{"2", "*", "R"}], " ", "+", " ", "0.025"}]}], "}"}], ",", 
+        " ", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", " ", 
+          RowBox[{
+           RowBox[{"2", "*", "R"}], " ", "+", " ", "0.075"}]}], "}"}]}], 
+       "}"}], "]"}]}], ";", "\n", " ", 
+    RowBox[{"ldash6", " ", "=", " ", 
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"a", " ", "-", " ", "0.001"}], ",", " ", 
+          RowBox[{
+           RowBox[{"2", "*", "R"}], " ", "+", " ", "0.025"}]}], "}"}], ",", 
+        " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"a", " ", "-", " ", "0.001"}], ",", " ", 
+          RowBox[{
+           RowBox[{"2", "*", "R"}], " ", "+", " ", "0.025"}]}], "}"}]}], 
+       "}"}], "]"}]}], ";", "\n", " ", 
+    RowBox[{"v5", " ", "=", " ", 
+     RowBox[{"Arrow", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"a", "/", "2"}], " ", "-", " ", "0.1"}], ",", " ", 
+          RowBox[{
+           RowBox[{"2", "*", "R"}], " ", "+", " ", "0.05"}]}], "}"}], ",", 
+        " ", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", " ", 
+          RowBox[{
+           RowBox[{"2", "*", "R"}], " ", "+", " ", "0.05"}]}], "}"}]}], "}"}],
+       "]"}]}], ";", "\n", " ", 
+    RowBox[{"v6", " ", "=", " ", 
+     RowBox[{"Arrow", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"a", "/", "2"}], " ", "+", " ", "0.1"}], ",", " ", 
+          RowBox[{
+           RowBox[{"2", "*", "R"}], " ", "+", " ", "0.05"}]}], "}"}], ",", 
+        " ", 
+        RowBox[{"{", 
+         RowBox[{"a", ",", " ", 
+          RowBox[{
+           RowBox[{"2", "*", "R"}], " ", "+", " ", "0.05"}]}], "}"}]}], "}"}],
+       "]"}]}], ";", "\n", " ", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"a", " ", "<", " ", "0.1"}], ",", " ", 
+      RowBox[{"Clear", "[", 
+       RowBox[{
+       "t0", ",", " ", "v5", ",", " ", "v6", ",", " ", "ldash5", ",", " ", 
+        "ldash6"}], "]"}]}], "]"}], ";", "\n", "\n", " ", 
+    RowBox[{"t1", " ", "=", " ", 
+     RowBox[{"Text", "[", 
+      RowBox[{
+       RowBox[{"Style", "[", 
+        RowBox[{"\"\<2R\>\"", ",", " ", "10", ",", " ", "Black"}], "]"}], ",",
+        " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"L", " ", "+", " ", "0.05"}], ",", " ", "R"}], "}"}]}], 
+      "]"}]}], ";", "\n", " ", 
+    RowBox[{"ldash1", " ", "=", " ", 
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"L", " ", "+", " ", "0.025"}], ",", " ", 
+          RowBox[{"2", "*", "R"}]}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"L", " ", "+", " ", "0.075"}], ",", " ", 
+          RowBox[{"2", "*", "R"}]}], "}"}]}], "}"}], "]"}]}], ";", "\n", " ", 
+    RowBox[{"ldash2", " ", "=", " ", 
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"L", " ", "+", " ", "0.025"}], ",", " ", "0"}], "}"}], ",", 
+        " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"L", " ", "+", " ", "0.075"}], ",", " ", "0"}], "}"}]}], 
+       "}"}], "]"}]}], ";", "\n", " ", 
+    RowBox[{"v1", " ", "=", " ", 
+     RowBox[{"Arrow", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"L", " ", "+", " ", "0.05"}], ",", " ", 
+          RowBox[{"R", " ", "+", " ", "0.02"}]}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"L", " ", "+", " ", "0.05"}], ",", " ", 
+          RowBox[{"2", "*", "R"}]}], "}"}]}], "}"}], "]"}]}], ";", "\n", " ", 
+    RowBox[{"v2", " ", "=", " ", 
+     RowBox[{"Arrow", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"L", " ", "+", " ", "0.05"}], ",", " ", 
+          RowBox[{"R", " ", "-", " ", "0.02"}]}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"L", " ", "+", " ", "0.05"}], ",", " ", "0"}], "}"}]}], 
+       "}"}], "]"}]}], ";", "\n", "\n", " ", 
+    RowBox[{"t2", " ", "=", " ", 
+     RowBox[{"Text", "[", 
+      RowBox[{
+       RowBox[{"Style", "[", 
+        RowBox[{"\"\<L\>\"", ",", " ", "10", ",", " ", "Black"}], "]"}], ",", 
+       " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"L", "/", "2"}], ",", " ", 
+         RowBox[{"-", "0.0375"}]}], "}"}]}], "]"}]}], ";", "\n", " ", 
+    RowBox[{"v3", " ", "=", " ", 
+     RowBox[{"Arrow", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"L", "/", "2"}], " ", "-", " ", "0.02"}], ",", " ", 
+          RowBox[{"-", "0.0375"}]}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", " ", 
+          RowBox[{"-", ".0375"}]}], "}"}]}], "}"}], "]"}]}], ";", "\n", " ", 
+    RowBox[{"v4", " ", "=", " ", 
+     RowBox[{"Arrow", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"L", "/", "2"}], " ", "+", " ", "0.02"}], ",", " ", 
+          RowBox[{"-", "0.0375"}]}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"L", ",", " ", 
+          RowBox[{"-", "0.0375"}]}], "}"}]}], "}"}], "]"}]}], ";", "\n", " ", 
+    RowBox[{"ldash3", " ", "=", " ", 
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", " ", 
+          RowBox[{"-", "0.05"}]}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", " ", 
+          RowBox[{"-", "0.025"}]}], "}"}]}], "}"}], "]"}]}], ";", "\n", " ", 
+    RowBox[{"ldash4", " ", "=", " ", 
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"L", ",", " ", 
+          RowBox[{"-", "0.05"}]}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"L", ",", " ", 
+          RowBox[{"-", "0.025"}]}], "}"}]}], "}"}], "]"}]}], ";", "\n", "\n", 
+    " ", 
+    RowBox[{"g", " ", "=", " ", 
+     RowBox[{"Graphics", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"FaceForm", "[", "White", "]"}], ",", " ", 
+        RowBox[{"EdgeForm", "[", "Black", "]"}], ",", " ", "\n", "    ", 
+        "bar", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"Thick", ",", " ", "Dashed", ",", " ", "l"}], "}"}], ",", 
+        " ", ",", " ", 
+        RowBox[{"{", "Mvector", "}"}], ",", " ", 
+        RowBox[{"{", "Mvector1", "}"}], ",", " ", 
+        RowBox[{"{", "t", "}"}], ",", " ", 
+        RowBox[{"{", "t0", "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"Thin", ",", " ", "\n", "     ", "ldash5"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"Thin", ",", " ", "ldash6"}], "}"}], ",", " ", 
+        RowBox[{"{", "v5", "}"}], ",", " ", 
+        RowBox[{"{", "v6", "}"}], ",", " ", 
+        RowBox[{"{", "t1", "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"Thin", ",", " ", "ldash1"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"Thin", ",", "\n", "      ", "ldash2"}], "}"}], ",", " ", 
+        RowBox[{"{", "v1", "}"}], ",", " ", 
+        RowBox[{"{", "v2", "}"}], ",", " ", 
+        RowBox[{"{", "t2", "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"Thin", ",", " ", "ldash3"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"Thin", ",", " ", "\n", "     ", "ldash4"}], "}"}], ",", " ", 
+        RowBox[{"{", "v3", "}"}], ",", " ", 
+        RowBox[{"{", "v4", "}"}]}], "}"}], "]"}]}], ";", "\n", "\n", " ", 
+    RowBox[{"fact", "=", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"z", "<", "a"}], ",", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"L", "-", "a"}], ")"}], "/", "L"}], ",", 
+       RowBox[{
+        RowBox[{"-", "a"}], "/", "L"}]}], "]"}]}], ";", "\n", " ", 
+    RowBox[{"Mb", "=", 
+     RowBox[{"fact", "*", "Mt"}]}], ";", "\n", " ", 
+    RowBox[{"\[Tau]\[Theta]z", " ", "=", " ", 
+     RowBox[{"r", "*", 
+      RowBox[{"Mb", "/", "Iz"}]}]}], ";", "\n", " ", 
+    RowBox[{"circle", " ", "=", " ", 
+     RowBox[{"Circle", "[", 
+      RowBox[{
+       RowBox[{"center", "[", 
+        RowBox[{"\[Sigma]\[Theta]", ",", " ", "\[Sigma]z"}], "]"}], ",", " ", 
+       RowBox[{"radius", "[", 
+        RowBox[{
+        "\[Sigma]\[Theta]", ",", " ", "\[Sigma]z", ",", " ", 
+         "\[Tau]\[Theta]z"}], "]"}]}], "]"}]}], ";", "\n", " ", 
+    RowBox[{"state", " ", "=", " ", 
+     RowBox[{"Point", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"\[Sigma]\[Theta]", ",", " ", 
+          RowBox[{"-", "\[Tau]\[Theta]z"}]}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"\[Sigma]z", ",", " ", "\[Tau]\[Theta]z"}], "}"}]}], "}"}], 
+      "]"}]}], ";", "\n", " ", 
+    RowBox[{"linestate", " ", "=", " ", 
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"\[Sigma]\[Theta]", ",", " ", 
+          RowBox[{"-", "\[Tau]\[Theta]z"}]}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"\[Sigma]z", ",", " ", "\[Tau]\[Theta]z"}], "}"}]}], "}"}], 
+      "]"}]}], ";", "\n", "\n", " ", 
+    RowBox[{"stateRotated", " ", "=", " ", "\n", "  ", 
+     RowBox[{
+      RowBox[{"Point", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\[Sigma]\[Theta]R", "[", 
+            RowBox[{
+            "\[Sigma]\[Theta]", ",", " ", "\[Sigma]z", ",", " ", 
+             "\[Tau]\[Theta]z", ",", " ", 
+             RowBox[{
+              RowBox[{"\[Pi]", "/", "180"}], " ", "\[Theta]"}]}], "]"}], ",", 
+           " ", 
+           RowBox[{"-", 
+            RowBox[{"\[Tau]\[Theta]zR", "[", 
+             RowBox[{
+             "\[Sigma]\[Theta]", ",", " ", "\[Sigma]z", ",", " ", 
+              "\[Tau]\[Theta]z", ",", " ", 
+              RowBox[{
+               RowBox[{"\[Pi]", "/", "180"}], " ", "\[Theta]"}]}], "]"}]}]}], 
+          "}"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\[Sigma]zR", "[", 
+            RowBox[{
+            "\[Sigma]\[Theta]", ",", " ", "\[Sigma]z", ",", " ", 
+             "\[Tau]\[Theta]z", ",", " ", 
+             RowBox[{
+              RowBox[{"\[Pi]", "/", "180"}], " ", "\[Theta]"}]}], "]"}], ",", 
+           " ", 
+           RowBox[{"\[Tau]\[Theta]zR", "[", 
+            RowBox[{
+            "\[Sigma]\[Theta]", ",", " ", "\[Sigma]z", ",", " ", 
+             "\[Tau]\[Theta]z", ",", " ", 
+             RowBox[{
+              RowBox[{"\[Pi]", "/", "180"}], " ", "\[Theta]"}]}], "]"}]}], 
+          "}"}]}], "}"}], "]"}], "/.", " ", "\n", "  ", 
+      RowBox[{
+       RowBox[{"Point", "[", "pts_", "]"}], " ", ":>", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"PointSize", "[", "Large", "]"}], ",", " ", "\n", "    ", 
+         RowBox[{"MapThread", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"#1", ",", " ", 
+              RowBox[{"Point", "[", "#2", "]"}]}], "}"}], " ", "&"}], ",", 
+           " ", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"Red", ",", " ", "Blue"}], "}"}], ",", " ", "pts"}], 
+            "}"}]}], "]"}]}], "}"}]}]}]}], ";", "\n", " ", 
+    RowBox[{"lineRotated", " ", "=", " ", "\n", "  ", 
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"\[Sigma]\[Theta]R", "[", 
+           RowBox[{
+           "\[Sigma]\[Theta]", ",", " ", "\[Sigma]z", ",", " ", 
+            "\[Tau]\[Theta]z", ",", " ", 
+            RowBox[{
+             RowBox[{"\[Pi]", "/", "180"}], " ", "\[Theta]"}]}], "]"}], ",", 
+          " ", 
+          RowBox[{"-", 
+           RowBox[{"\[Tau]\[Theta]zR", "[", 
+            RowBox[{
+            "\[Sigma]\[Theta]", ",", " ", "\[Sigma]z", ",", " ", 
+             "\[Tau]\[Theta]z", ",", " ", 
+             RowBox[{
+              RowBox[{"\[Pi]", "/", "180"}], " ", "\[Theta]"}]}], "]"}]}]}], 
+         "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"\[Sigma]zR", "[", 
+           RowBox[{
+           "\[Sigma]\[Theta]", ",", " ", "\[Sigma]z", ",", " ", 
+            "\[Tau]\[Theta]z", ",", " ", 
+            RowBox[{
+             RowBox[{"\[Pi]", "/", "180"}], " ", "\[Theta]"}]}], "]"}], ",", 
+          " ", 
+          RowBox[{"\[Tau]\[Theta]zR", "[", 
+           RowBox[{
+           "\[Sigma]\[Theta]", ",", " ", "\[Sigma]z", ",", " ", 
+            "\[Tau]\[Theta]z", ",", " ", 
+            RowBox[{
+             RowBox[{"\[Pi]", "/", "180"}], " ", "\[Theta]"}]}], "]"}]}], 
+         "}"}]}], "}"}], "]"}]}], ";", "\n", "\n", " ", 
+    RowBox[{"g2", " ", "=", " ", 
+     RowBox[{"Graphics", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"circle", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"PointSize", "[", "0.02", "]"}], ",", " ", "state"}], 
+          "}"}], ",", " ", 
+         RowBox[{"{", "linestate", "}"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"Blue", ",", " ", 
+           RowBox[{"PointSize", "[", "0.02", "]"}], ",", " ", "stateRotated", 
+           ",", " ", "lineRotated"}], "}"}]}], "}"}], ",", " ", 
+       RowBox[{"Axes", " ", "->", " ", "True"}], ",", " ", 
+       RowBox[{"PlotRange", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "15000"}], ",", " ", "15000"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "15000"}], ",", " ", "15000"}], "}"}]}], "}"}]}], 
+       ",", 
+       RowBox[{"AxesLabel", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"\"\<\[Sigma]\[Theta]\>\"", ",", "\"\<\[Tau]\[Theta]z\>\""}],
+          "}"}]}], ",", 
+       RowBox[{"AxesStyle", "\[Rule]", 
+        RowBox[{"Directive", "[", 
+         RowBox[{"Pink", ",", "12"}], "]"}]}]}], "]"}]}], ";", "\n", "\n", 
+    "\n", " ", 
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"GraphicsRow", "[", 
+       RowBox[{"{", 
+        RowBox[{"g", ",", " ", "g2"}], "}"}], "]"}], ",", " ", 
+      RowBox[{"ImageSize", "->", " ", "Full"}]}], "]"}]}], ",", "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"Mt", ",", " ", "0"}], "}"}], ",", " ", "0", ",", " ", "20", 
+     ",", " ", "0.01"}], "}"}], ",", "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a", ",", " ", "0.1"}], "}"}], ",", " ", "0", ",", " ", "L", 
+     ",", " ", "0.01"}], "}"}], ",", "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", "0"}], "}"}], ",", "0", ",", "R", ",", "0.01"}], 
+    "}"}], ",", "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Theta]", ",", " ", "0"}], "}"}], ",", " ", "0", ",", " ", 
+     "360", ",", " ", "1"}], "}"}], ",", "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"z", ",", "0"}], "}"}], ",", "0", ",", "L", ",", "0.01"}], 
+    "}"}]}], "\n", "]"}]}], "Code",
+ CellChangeTimes->{{3.9218138233728466`*^9, 3.9218139434686146`*^9}, {
+  3.9227208614891996`*^9, 3.922720904964542*^9}},
+ CellLabel->"In[54]:=",ExpressionUUID->"f836428c-1e82-46e3-bfc6-28cda8e15626"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Set","wrsym",
+   "\"Symbol \\!\\(\\*RowBox[{\\\"\[ExponentialE]\\\"}]\\) is Protected.\"",2,
+   56,5,33221829056189224290,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.921813827275885*^9, 3.921813829117958*^9}, 
+   3.9218139504745035`*^9, {3.922720665103208*^9, 3.9227206663259106`*^9}, 
+   3.9227208843827686`*^9, 3.922720922786841*^9},
+ CellLabel->
+  "During evaluation of \
+In[54]:=",ExpressionUUID->"8bd6cb82-f71f-43f6-a24c-0394677b3953"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 0.88, $CellContext`Mt$$ = 
+    14.67, $CellContext`r$$ = 0, $CellContext`z$$ = 
+    0, $CellContext`\[Theta]$$ = 0, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`Mt$$], 0}, 0, 20, 0.01}, {{
+       Hold[$CellContext`a$$], 0.1}, 0, 1, 0.01}, {{
+       Hold[$CellContext`r$$], 0}, 0, 0.1, 0.01}, {{
+       Hold[$CellContext`\[Theta]$$], 0}, 0, 360, 1}, {{
+       Hold[$CellContext`z$$], 0}, 0, 1, 0.01}}, Typeset`size$$ = {
+    1345., {264., 269.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`Mt$13206$$ = 
+    0, $CellContext`a$13207$$ = 0, $CellContext`r$13208$$ = 
+    0, $CellContext`\[Theta]$13209$$ = 0, $CellContext`z$13210$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 0.1, $CellContext`Mt$$ = 
+        0, $CellContext`r$$ = 0, $CellContext`z$$ = 
+        0, $CellContext`\[Theta]$$ = 0}, "ControllerVariables" :> {
+        Hold[$CellContext`Mt$$, $CellContext`Mt$13206$$, 0], 
+        Hold[$CellContext`a$$, $CellContext`a$13207$$, 0], 
+        Hold[$CellContext`r$$, $CellContext`r$13208$$, 0], 
+        Hold[$CellContext`\[Theta]$$, $CellContext`\[Theta]$13209$$, 0], 
+        Hold[$CellContext`z$$, $CellContext`z$13210$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> ($CellContext`Mvector = 
+        Arrow[{{$CellContext`a$$, $CellContext`Mt$$/50 + 
+            2 $CellContext`R}, {$CellContext`a$$, 
+            2 $CellContext`R}}]; $CellContext`Mvector1 = 
+        Arrow[{{$CellContext`a$$, $CellContext`Mt$$/50 + 
+            2 $CellContext`R}, {$CellContext`a$$, 
+            1.5 $CellContext`R}}]; $CellContext`t = Text[
+          Style[
+           StringJoin["Mt=", 
+            ToString[$CellContext`Mt$$]], 14, Red], {$CellContext`a$$ + 0.17, 
+           2 $CellContext`R + 0.1}]; $CellContext`t0 = Text[
+          Style[
+           StringJoin["a=", 
+            ToString[$CellContext`a$$]], 14, Red], {$CellContext`a$$/2, 
+           2 $CellContext`R + 0.05}]; $CellContext`ldash5 = 
+        Line[{{0, 2 $CellContext`R + 0.025}, {
+           0, 2 $CellContext`R + 0.075}}]; $CellContext`ldash6 = 
+        Line[{{$CellContext`a$$ - 0.001, 2 $CellContext`R + 
+            0.025}, {$CellContext`a$$ - 0.001, 2 $CellContext`R + 
+            0.025}}]; $CellContext`v5 = 
+        Arrow[{{$CellContext`a$$/2 - 0.1, 2 $CellContext`R + 0.05}, {
+           0, 2 $CellContext`R + 0.05}}]; $CellContext`v6 = 
+        Arrow[{{$CellContext`a$$/2 + 0.1, 2 $CellContext`R + 
+            0.05}, {$CellContext`a$$, 2 $CellContext`R + 0.05}}]; 
+       If[$CellContext`a$$ < 0.1, 
+         Clear[$CellContext`t0, $CellContext`v5, $CellContext`v6, \
+$CellContext`ldash5, $CellContext`ldash6]]; $CellContext`t1 = Text[
+          Style[
+          "2R", 10, Black], {$CellContext`L + 
+           0.05, $CellContext`R}]; $CellContext`ldash1 = 
+        Line[{{$CellContext`L + 0.025, 2 $CellContext`R}, {$CellContext`L + 
+            0.075, 2 $CellContext`R}}]; $CellContext`ldash2 = 
+        Line[{{$CellContext`L + 0.025, 0}, {$CellContext`L + 0.075, 
+            0}}]; $CellContext`v1 = 
+        Arrow[{{$CellContext`L + 0.05, $CellContext`R + 
+            0.02}, {$CellContext`L + 0.05, 
+            2 $CellContext`R}}]; $CellContext`v2 = 
+        Arrow[{{$CellContext`L + 0.05, $CellContext`R - 
+            0.02}, {$CellContext`L + 0.05, 0}}]; $CellContext`t2 = Text[
+          Style[
+          "L", 10, Black], {$CellContext`L/2, -0.0375}]; $CellContext`v3 = 
+        Arrow[{{$CellContext`L/2 - 0.02, -0.0375}, {
+           0, -0.0375}}]; $CellContext`v4 = 
+        Arrow[{{$CellContext`L/2 + 
+            0.02, -0.0375}, {$CellContext`L, -0.0375}}]; $CellContext`ldash3 = 
+        Line[{{0, -0.05}, {0, -0.025}}]; $CellContext`ldash4 = 
+        Line[{{$CellContext`L, -0.05}, {$CellContext`L, -0.025}}]; \
+$CellContext`g = Graphics[{
+           FaceForm[White], 
+           EdgeForm[Black], $CellContext`bar, {Thick, Dashed, $CellContext`l},
+            Null, {$CellContext`Mvector}, {$CellContext`Mvector1}, \
+{$CellContext`t}, {$CellContext`t0}, {Thin, $CellContext`ldash5}, {
+           Thin, $CellContext`ldash6}, {$CellContext`v5}, {$CellContext`v6}, \
+{$CellContext`t1}, {Thin, $CellContext`ldash1}, {
+           Thin, $CellContext`ldash2}, {$CellContext`v1}, {$CellContext`v2}, \
+{$CellContext`t2}, {Thin, $CellContext`ldash3}, {
+           Thin, $CellContext`ldash4}, {$CellContext`v3}, {$CellContext`v4}}]; \
+$CellContext`fact = 
+        If[$CellContext`z$$ < $CellContext`a$$, ($CellContext`L - \
+$CellContext`a$$)/$CellContext`L, (-$CellContext`a$$)/$CellContext`L]; \
+$CellContext`Mb = $CellContext`fact $CellContext`Mt$$; $CellContext`\[Tau]\
+\[Theta]z = $CellContext`r$$ ($CellContext`Mb/$CellContext`Iz); \
+$CellContext`circle = Circle[
+          $CellContext`center[$CellContext`\[Sigma]\[Theta], $CellContext`\
+\[Sigma]z], 
+          $CellContext`radius[$CellContext`\[Sigma]\[Theta], $CellContext`\
+\[Sigma]z, $CellContext`\[Tau]\[Theta]z]]; $CellContext`state = 
+        Point[{{$CellContext`\[Sigma]\[Theta], \
+-$CellContext`\[Tau]\[Theta]z}, {$CellContext`\[Sigma]z, $CellContext`\[Tau]\
+\[Theta]z}}]; $CellContext`linestate = 
+        Line[{{$CellContext`\[Sigma]\[Theta], -$CellContext`\[Tau]\[Theta]z}, \
+{$CellContext`\[Sigma]z, $CellContext`\[Tau]\[Theta]z}}]; \
+$CellContext`stateRotated = ReplaceAll[
+          Point[{{
+             $CellContext`\[Sigma]\[Theta]R[$CellContext`\[Sigma]\[Theta], \
+$CellContext`\[Sigma]z, $CellContext`\[Tau]\[Theta]z, (Pi/
+               180) $CellContext`\[Theta]$$], \
+-$CellContext`\[Tau]\[Theta]zR[$CellContext`\[Sigma]\[Theta], $CellContext`\
+\[Sigma]z, $CellContext`\[Tau]\[Theta]z, (Pi/180) $CellContext`\[Theta]$$]}, {
+             $CellContext`\[Sigma]zR[$CellContext`\[Sigma]\[Theta], \
+$CellContext`\[Sigma]z, $CellContext`\[Tau]\[Theta]z, (Pi/
+               180) $CellContext`\[Theta]$$], 
+             $CellContext`\[Tau]\[Theta]zR[$CellContext`\[Sigma]\[Theta], \
+$CellContext`\[Sigma]z, $CellContext`\[Tau]\[Theta]z, (Pi/
+               180) $CellContext`\[Theta]$$]}}], Point[
+            Pattern[$CellContext`pts, 
+             Blank[]]] :> {
+            PointSize[Large], 
+            MapThread[{#, 
+              Point[#2]}& , {{
+              Red, Blue}, $CellContext`pts}]}]; $CellContext`lineRotated = 
+        Line[{{
+            $CellContext`\[Sigma]\[Theta]R[$CellContext`\[Sigma]\[Theta], \
+$CellContext`\[Sigma]z, $CellContext`\[Tau]\[Theta]z, (Pi/
+              180) $CellContext`\[Theta]$$], \
+-$CellContext`\[Tau]\[Theta]zR[$CellContext`\[Sigma]\[Theta], $CellContext`\
+\[Sigma]z, $CellContext`\[Tau]\[Theta]z, (Pi/180) $CellContext`\[Theta]$$]}, {
+            $CellContext`\[Sigma]zR[$CellContext`\[Sigma]\[Theta], \
+$CellContext`\[Sigma]z, $CellContext`\[Tau]\[Theta]z, (Pi/
+              180) $CellContext`\[Theta]$$], 
+            $CellContext`\[Tau]\[Theta]zR[$CellContext`\[Sigma]\[Theta], \
+$CellContext`\[Sigma]z, $CellContext`\[Tau]\[Theta]z, (Pi/
+              180) $CellContext`\[Theta]$$]}}]; $CellContext`g2 = 
+        Graphics[{$CellContext`circle, {
+            PointSize[0.02], $CellContext`state}, {$CellContext`linestate}, {
+           Blue, 
+            PointSize[
+            0.02], $CellContext`stateRotated, $CellContext`lineRotated}}, 
+          Axes -> True, PlotRange -> {{-15000, 15000}, {-15000, 15000}}, 
+          AxesLabel -> {"\[Sigma]\[Theta]", "\[Tau]\[Theta]z"}, AxesStyle -> 
+          Directive[Pink, 12]]; Show[
+         GraphicsRow[{$CellContext`g, $CellContext`g2}], ImageSize -> Full]), 
+      "Specifications" :> {{{$CellContext`Mt$$, 0}, 0, 20, 
+         0.01}, {{$CellContext`a$$, 0.1}, 0, 1, 0.01}, {{$CellContext`r$$, 0},
+          0, 0.1, 0.01}, {{$CellContext`\[Theta]$$, 0}, 0, 360, 
+         1}, {{$CellContext`z$$, 0}, 0, 1, 0.01}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{1392., {356., 362.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.9218138273545685`*^9, 3.921813829151766*^9}, 
+   3.9218139505700445`*^9, {3.92272066560859*^9, 3.922720666382724*^9}, 
+   3.9227208844406104`*^9, 3.922720922841491*^9},
+ CellLabel->"Out[68]=",ExpressionUUID->"96bc65f1-1f0f-4e73-a334-e46ffbe71ef2"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Depiction of Stress distribution on 2D element at (r,\[Theta],z)", \
+"Chapter",
+ CellChangeTimes->{
+  3.9218139940085745`*^9},ExpressionUUID->"59b94e27-5a24-49d0-a6e6-\
+34b1ca353b66"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"element", " ", "=", " ", 
+    RowBox[{"Graphics", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"FaceForm", "[", "None", "]"}], ",", " ", 
+        RowBox[{"EdgeForm", "[", "Black", "]"}], ",", " ", 
+        RowBox[{"Rectangle", "[", "]"}], ",", " ", "Red", ",", " ", "\n", 
+        "    ", 
+        RowBox[{"Arrow", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"1", ",", " ", 
+             RowBox[{"-", "0.1"}]}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", " ", 
+             RowBox[{"-", "0.1"}]}], "}"}]}], "}"}], "]"}], ",", " ", "Red", 
+        ",", " ", 
+        RowBox[{"Arrow", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"1.1", ",", " ", "0"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"1.1", ",", " ", "1"}], "}"}]}], "}"}], "]"}], ",", " ", 
+        "\n", "    ", "Red", ",", " ", 
+        RowBox[{"Arrow", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"0", ",", " ", "1.1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", " ", "1.1"}], "}"}]}], "}"}], "]"}], ",", " ", 
+        "Red", ",", " ", "\n", "    ", 
+        RowBox[{"Arrow", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.1"}], ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.1"}], ",", " ", "0"}], "}"}]}], "}"}], "]"}], 
+        ",", " ", "Blue", ",", " ", "\n", "    ", 
+        RowBox[{"Arrow", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"0.5", ",", " ", "0.5"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"1.5", ",", " ", "0.5"}], "}"}]}], "}"}], "]"}], ",", " ",
+         "Blue", ",", " ", "\n", "    ", 
+        RowBox[{"Arrow", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"0.5", ",", " ", "0.5"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"0.5", ",", " ", "1.5"}], "}"}]}], "}"}], "]"}], ",", " ",
+         "\n", "    ", 
+        RowBox[{"Text", "[", 
+         RowBox[{
+          RowBox[{"Style", "[", 
+           RowBox[{"\"\<\[Sigma]\[Theta]\>\"", ",", " ", "16"}], "]"}], ",", 
+          " ", 
+          RowBox[{"{", 
+           RowBox[{"1.6", ",", " ", "0.5"}], "}"}]}], "]"}], ",", " ", "\n", 
+        "    ", 
+        RowBox[{"Text", "[", 
+         RowBox[{
+          RowBox[{"Style", "[", 
+           RowBox[{"\"\<\[Sigma]z\>\"", ",", " ", "16"}], "]"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"0.5", ",", " ", "1.6"}], "}"}]}], "]"}], ",", " ", "Red", 
+        ",", " ", "\n", "    ", 
+        RowBox[{"Text", "[", 
+         RowBox[{
+          RowBox[{"Style", "[", 
+           RowBox[{"\"\<\[Tau]\[Theta]z\>\"", ",", " ", "16"}], "]"}], ",", 
+          " ", 
+          RowBox[{"{", 
+           RowBox[{"1.2", ",", " ", "1"}], "}"}]}], "]"}]}], "}"}], ",", " ", 
+      "\n", "   ", 
+      RowBox[{"PlotRange", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "2"}], ",", " ", "2"}], "}"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "2"}], ",", " ", "2"}], "}"}]}], "}"}]}], ",", " ", 
+      RowBox[{"Axes", " ", "->", " ", "False"}], ",", " ", 
+      RowBox[{"ImageSize", " ", "->", " ", "500"}], ",", " ", 
+      RowBox[{"ImagePadding", " ", "->", " ", "40"}]}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"L", " ", "=", " ", "1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"R", " ", "=", " ", "0.1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Iz", " ", "=", " ", 
+    RowBox[{"\[Pi]", "*", 
+     RowBox[{
+      RowBox[{"R", "^", "4"}], "/", "2"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"\[Sigma]\[Theta]\[Theta]", "'"}], "[", 
+    RowBox[{
+    "\[Sigma]\[Theta]", ",", " ", "\[Sigma]z", ",", " ", "\[Tau]\[Theta]z_", 
+     ",", " ", "\[Theta]_"}], "]"}], " ", ":=", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"\[Sigma]\[Theta]", " ", "+", " ", "\[Sigma]z"}], ")"}], "/", 
+     "2"}], " ", "+", " ", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"\[Sigma]\[Theta]", " ", "-", " ", "\[Sigma]z"}], ")"}], "/", 
+       "2"}], " ", ")"}], "*", 
+     RowBox[{"Cos", "[", 
+      RowBox[{"2", " ", "\[Theta]"}], "]"}]}], " ", "+", " ", 
+    RowBox[{"\[Tau]\[Theta]z", "*", 
+     RowBox[{"Sin", "[", 
+      RowBox[{"2", " ", "\[Theta]"}], "]"}]}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"\[Sigma]zz", "'"}], "[", 
+    RowBox[{
+    "\[Sigma]\[Theta]", ",", " ", "\[Sigma]z", ",", " ", "\[Tau]\[Theta]z_", 
+     ",", " ", "\[Theta]_"}], "]"}], " ", ":=", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"\[Sigma]\[Theta]", " ", "+", " ", "\[Sigma]z"}], ")"}], "/", 
+     "2"}], " ", "-", " ", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"\[Sigma]\[Theta]", " ", "-", " ", "\[Sigma]z"}], ")"}], "/", 
+       "2"}], ")"}], "*", " ", 
+     RowBox[{"Cos", "[", 
+      RowBox[{"2", " ", "\[Theta]"}], "]"}]}], " ", "-", " ", 
+    RowBox[{"\[Tau]\[Theta]z", "*", 
+     RowBox[{"Sin", "[", 
+      RowBox[{"2", " ", "\[Theta]"}], "]"}]}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"\[Tau]\[Theta]z", "'"}], "[", 
+     RowBox[{
+     "\[Sigma]\[Theta]", ",", " ", "\[Sigma]z", ",", " ", "\[Tau]\[Theta]z_", 
+      ",", " ", "\[Theta]_"}], "]"}], " ", ":=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", 
+       RowBox[{"(", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"\[Sigma]\[Theta]", " ", "-", " ", "\[Sigma]z"}], ")"}], 
+          "/", "2"}], ")"}], ")"}]}], " ", "*", 
+      RowBox[{"Sin", "[", 
+       RowBox[{"2", " ", "\[Theta]"}], "]"}]}], " ", "+", " ", 
+     RowBox[{"\[Tau]\[Theta]z", "*", 
+      RowBox[{"Cos", "[", 
+       RowBox[{"2", " ", "\[Theta]"}], "]"}]}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{"Manipulate", "[", "\n", " ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Mb", " ", "=", " ", 
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"z", " ", "<", " ", "a"}], ",", " ", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"L", " ", "-", " ", "a"}], ")"}], "/", "L"}], ",", " ", 
+        RowBox[{"a", "/", "L"}]}], "]"}], "*", "Mt"}]}], ";", "\n", " ", 
+    RowBox[{"\[Tau]\[Theta]z", "=", " ", 
+     RowBox[{"Mb", "*", 
+      RowBox[{"r", "/", "Iz"}]}]}], ";", "\n", " ", 
+    RowBox[{"element1", " ", "=", " ", 
+     RowBox[{"Graphics", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"FaceForm", "[", "None", "]"}], ",", " ", 
+         RowBox[{"EdgeForm", "[", "Black", "]"}], ",", " ", 
+         RowBox[{"Rectangle", "[", "]"}], ",", " ", "Red", ",", " ", "\n", 
+         "    ", 
+         RowBox[{"Arrow", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"1", ",", " ", 
+              RowBox[{"-", "0.1"}]}], "}"}], ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", " ", 
+              RowBox[{"-", "0.1"}]}], "}"}]}], "}"}], "]"}], ",", " ", "Red", 
+         ",", " ", 
+         RowBox[{"Arrow", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"1.1", ",", " ", "0"}], "}"}], ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"1.1", ",", " ", "1"}], "}"}]}], "}"}], "]"}], ",", " ", 
+         "\n", "    ", "Red", ",", " ", 
+         RowBox[{"Arrow", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", " ", "1.1"}], "}"}], ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"1", ",", " ", "1.1"}], "}"}]}], "}"}], "]"}], ",", " ", 
+         "Red", ",", " ", "\n", "    ", 
+         RowBox[{"Arrow", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "0.1"}], ",", " ", "1"}], "}"}], ",", " ", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "0.1"}], ",", " ", "0"}], "}"}]}], "}"}], "]"}], 
+         ",", " ", "Blue", ",", " ", "\n", "    ", 
+         RowBox[{"Arrow", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0.5", ",", " ", "0.5"}], "}"}], ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"1.5", ",", " ", "0.5"}], "}"}]}], "}"}], "]"}], ",", 
+         " ", "Blue", ",", " ", "\n", "    ", 
+         RowBox[{"Arrow", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0.5", ",", " ", "0.5"}], "}"}], ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"0.5", ",", " ", "1.5"}], "}"}]}], "}"}], "]"}], ",", 
+         "\n", "    ", 
+         RowBox[{"Text", "[", 
+          RowBox[{
+           RowBox[{"Style", "[", 
+            RowBox[{
+             RowBox[{"\"\<\[Sigma]\[Theta]\[Theta]'=\>\"", " ", "<>", " ", 
+              RowBox[{"ToString", "[", 
+               RowBox[{"NumberForm", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"\[Sigma]\[Theta]\[Theta]", "'"}], "[", 
+                  RowBox[{
+                  "0", ",", " ", "0", ",", " ", "\[Tau]\[Theta]z", ",", " ", 
+                   "\[Theta]"}], "]"}], ",", " ", 
+                 RowBox[{"{", 
+                  RowBox[{"Infinity", ",", " ", "2"}], "}"}]}], "]"}], 
+               "]"}]}], ",", "16"}], "]"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"1.8", ",", " ", "0.5"}], "}"}]}], "]"}], ",", "\n", 
+         "    ", 
+         RowBox[{"Text", "[", 
+          RowBox[{
+           RowBox[{"Style", "[", 
+            RowBox[{
+             RowBox[{"\"\<\[Sigma]zz'=\>\"", " ", "<>", " ", 
+              RowBox[{"ToString", "[", 
+               RowBox[{"NumberForm", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"\[Sigma]zz", "'"}], "[", 
+                  RowBox[{
+                  "0", ",", " ", "0", ",", " ", "\[Tau]\[Theta]z", ",", " ", 
+                   "\[Theta]"}], "]"}], ",", " ", 
+                 RowBox[{"{", 
+                  RowBox[{"Infinity", ",", " ", "2"}], "}"}]}], "]"}], 
+               "]"}]}], ",", " ", "16"}], "]"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"0.5", ",", " ", "1.6"}], "}"}]}], "]"}], ",", "\n", 
+         "    ", "Red", ",", " ", 
+         RowBox[{"Text", "[", 
+          RowBox[{
+           RowBox[{"Style", "[", 
+            RowBox[{
+             RowBox[{"\"\<\[Tau]\[Theta]z'=\>\"", " ", "<>", " ", 
+              RowBox[{"ToString", "[", 
+               RowBox[{"NumberForm", "[", 
+                RowBox[{
+                 RowBox[{"\[Tau]\[Theta]z", "*", 
+                  RowBox[{"Cos", "[", 
+                   RowBox[{"2", " ", "\[Theta]"}], "]"}]}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"Infinity", ",", "2"}], "}"}]}], "]"}], "]"}]}], 
+             ",", " ", "16"}], "]"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"1.4", ",", " ", "1.1"}], "}"}]}], "]"}]}], "}"}], ",", 
+       "\n", "\n", "   ", 
+       RowBox[{"PlotRange", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "2"}], ",", " ", "2"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "2"}], ",", " ", "2"}], "}"}]}], "}"}]}], ",", " ", 
+       RowBox[{"Axes", " ", "->", " ", "False"}], ",", " ", 
+       RowBox[{"ImageSize", " ", "->", " ", "500"}], ",", " ", 
+       RowBox[{"ImagePadding", " ", "->", " ", "40"}]}], "]"}]}], ";", "\n", 
+    " ", 
+    RowBox[{"Grid", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"{", 
+        RowBox[{"element", ",", " ", 
+         RowBox[{"Spacer", "[", "50", "]"}], ",", " ", 
+         RowBox[{"Rotate", "[", 
+          RowBox[{"element1", ",", " ", "\[Theta]", ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"0.5", ",", " ", "0.5"}], "}"}]}], "]"}], ",", " ", "\n", 
+         "    ", 
+         RowBox[{"Spacer", "[", "50", "]"}], ",", " ", "\n", "    ", 
+         RowBox[{"Column", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Style", "[", 
+              RowBox[{
+               RowBox[{"StringForm", "[", 
+                RowBox[{"\"\<\[Theta]:`` rad\>\"", ",", " ", "\[Theta]"}], 
+                "]"}], ",", " ", "16", ",", " ", "\"\<Label\>\""}], "]"}], 
+             ",", " ", "\n", "    ", 
+             RowBox[{"Style", "[", 
+              RowBox[{
+               RowBox[{"StringForm", "[", 
+                RowBox[{"\"\<\[Sigma]\[Theta]\[Theta]':`` \>\"", ",", " ", 
+                 RowBox[{"NumberForm", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"\[Sigma]\[Theta]\[Theta]", "'"}], "[", 
+                    RowBox[{
+                    "0", ",", " ", "0", ",", " ", "\[Tau]\[Theta]z", ",", " ",
+                     "\[Theta]"}], "]"}], ",", 
+                   RowBox[{"{", 
+                    RowBox[{"Infinity", ",", "2"}], "}"}]}], "]"}]}], "]"}], 
+               ",", " ", "16", ",", " ", "\"\<Label\>\""}], "]"}], ",", " ", 
+             "\n", "    ", 
+             RowBox[{"Style", "[", 
+              RowBox[{
+               RowBox[{"StringForm", "[", 
+                RowBox[{"\"\<\[Sigma]zz':`` \>\"", ",", " ", 
+                 RowBox[{"NumberForm", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"\[Sigma]zz", "'"}], "[", 
+                    RowBox[{
+                    "0", ",", " ", "0", ",", " ", "\[Tau]\[Theta]z", ",", " ",
+                     "\[Theta]"}], "]"}], ",", 
+                   RowBox[{"{", 
+                    RowBox[{"Infinity", ",", "2"}], "}"}]}], "]"}]}], "]"}], 
+               ",", " ", "16", ",", " ", "\"\<Label\>\""}], "]"}], ",", " ", 
+             "\n", "    ", 
+             RowBox[{"Style", "[", 
+              RowBox[{
+               RowBox[{"StringForm", "[", 
+                RowBox[{"\"\<\[Tau]\[Theta]z':`` \>\"", ",", " ", 
+                 RowBox[{"NumberForm", "[", 
+                  RowBox[{
+                   RowBox[{"\[Tau]\[Theta]z", "*", 
+                    RowBox[{"Cos", "[", 
+                    RowBox[{"2", " ", "\[Theta]"}], "]"}]}], ",", 
+                   RowBox[{"{", 
+                    RowBox[{"Infinity", ",", "2"}], "}"}]}], "]"}]}], "]"}], 
+               ",", " ", "16", ",", " ", "\"\<Label\>\""}], "]"}]}], "}"}], 
+           ",", "\n", "    ", 
+           RowBox[{"Alignment", "->", "Center"}]}], "]"}]}], "}"}], "}"}], 
+      ",", " ", 
+      RowBox[{"Spacings", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", " ", "100"}], "}"}]}]}], "]"}]}], ",", " ", "\n", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Theta]", ",", " ", "0"}], "}"}], ",", " ", "0", ",", " ", 
+     RowBox[{"2", " ", "Pi"}], ",", " ", 
+     RowBox[{"Pi", "/", "10"}]}], "}"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"Mt", ",", " ", "0"}], "}"}], ",", " ", "0", ",", " ", "20", 
+     ",", " ", "0.01"}], "}"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a", ",", " ", "0"}], "}"}], ",", " ", "0", ",", " ", "L", ",", 
+     " ", "0.01"}], "}"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", " ", "0"}], "}"}], ",", " ", "0", ",", " ", "R", ",", 
+     " ", "0.01"}], "}"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"z", ",", " ", "0"}], "}"}], ",", " ", "0", ",", " ", "L", ",", 
+     " ", "0.01"}], "}"}]}], "]"}]}], "Code",
+ CellChangeTimes->{
+  3.9218140317637568`*^9, {3.922722147076538*^9, 3.922722204995093*^9}},
+ CellLabel->"In[77]:=",ExpressionUUID->"7604b6be-67f6-4453-8bf7-e44d382e9690"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "SetDelayed","write",
+   "\"Tag \\!\\(\\*RowBox[{\\\"Function\\\"}]\\) in \\!\\(\\*RowBox[{RowBox[{\
+\\\"(\\\", RowBox[{\\\"0\\\", \\\"&\\\"}], \\\")\\\"}], \\\"[\\\", RowBox[{\\\
+\"0\\\", \\\",\\\", \\\"0\\\", \\\",\\\", \\\"\[Tau]\[Theta]z_\\\", \
+\\\",\\\", \\\"\[Theta]_\\\"}], \\\"]\\\"}]\\) is Protected.\"",2,83,7,
+   33221829056189224290,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.9218140340796537`*^9, 3.9227206660244513`*^9, 
+  3.922722239163286*^9, 3.922722335046442*^9},
+ CellLabel->
+  "During evaluation of \
+In[77]:=",ExpressionUUID->"6b3681ac-d1c5-4ba9-bba4-c2a2ee575692"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 0.54, $CellContext`Mt$$ = 
+    0., $CellContext`r$$ = 0.1, $CellContext`z$$ = 
+    0, $CellContext`\[Theta]$$ = 0, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`\[Theta]$$], 0}, 0, 2 Pi, Rational[1, 10] Pi}, {{
+       Hold[$CellContext`Mt$$], 0}, 0, 20, 0.01}, {{
+       Hold[$CellContext`a$$], 0}, 0, 1, 0.01}, {{
+       Hold[$CellContext`r$$], 0}, 0, 0.1, 0.01}, {{
+       Hold[$CellContext`z$$], 0}, 0, 1, 0.01}}, Typeset`size$$ = {
+    1063., {222., 228.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`\[Theta]$21205$$ = 
+    0, $CellContext`Mt$21206$$ = 0, $CellContext`a$21207$$ = 
+    0, $CellContext`r$21208$$ = 0, $CellContext`z$21209$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 0, $CellContext`Mt$$ = 
+        0, $CellContext`r$$ = 0, $CellContext`z$$ = 
+        0, $CellContext`\[Theta]$$ = 0}, "ControllerVariables" :> {
+        Hold[$CellContext`\[Theta]$$, $CellContext`\[Theta]$21205$$, 0], 
+        Hold[$CellContext`Mt$$, $CellContext`Mt$21206$$, 0], 
+        Hold[$CellContext`a$$, $CellContext`a$21207$$, 0], 
+        Hold[$CellContext`r$$, $CellContext`r$21208$$, 0], 
+        Hold[$CellContext`z$$, $CellContext`z$21209$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> ($CellContext`Mb = 
+        If[$CellContext`z$$ < $CellContext`a$$, ($CellContext`L - \
+$CellContext`a$$)/$CellContext`L, $CellContext`a$$/$CellContext`L] \
+$CellContext`Mt$$; $CellContext`\[Tau]\[Theta]z = $CellContext`Mb \
+($CellContext`r$$/$CellContext`Iz); $CellContext`element1 = Graphics[{
+           FaceForm[None], 
+           EdgeForm[Black], 
+           Rectangle[], Red, 
+           Arrow[{{1, -0.1}, {0, -0.1}}], Red, 
+           Arrow[{{1.1, 0}, {1.1, 1}}], Red, 
+           Arrow[{{0, 1.1}, {1, 1.1}}], Red, 
+           Arrow[{{-0.1, 1}, {-0.1, 0}}], Blue, 
+           Arrow[{{0.5, 0.5}, {1.5, 0.5}}], Blue, 
+           Arrow[{{0.5, 0.5}, {0.5, 1.5}}], 
+           Text[
+            Style[
+             StringJoin["\[Sigma]\[Theta]\[Theta]'=", 
+              ToString[
+               NumberForm[
+                Derivative[1][$CellContext`\[Sigma]\[Theta]\[Theta]][
+                0, 0, $CellContext`\[Tau]\[Theta]z, $CellContext`\[Theta]$$], \
+{Infinity, 2}]]], 16], {1.8, 0.5}], 
+           Text[
+            Style[
+             StringJoin["\[Sigma]zz'=", 
+              ToString[
+               NumberForm[
+                Derivative[1][$CellContext`\[Sigma]zz][
+                0, 0, $CellContext`\[Tau]\[Theta]z, $CellContext`\[Theta]$$], \
+{Infinity, 2}]]], 16], {0.5, 1.6}], Red, 
+           Text[
+            Style[
+             StringJoin["\[Tau]\[Theta]z'=", 
+              ToString[
+               
+               NumberForm[$CellContext`\[Tau]\[Theta]z 
+                Cos[2 $CellContext`\[Theta]$$], {Infinity, 2}]]], 16], {1.4, 
+            1.1}]}, PlotRange -> {{-2, 2}, {-2, 2}}, Axes -> False, ImageSize -> 
+          500, ImagePadding -> 40]; Grid[{{$CellContext`element, 
+           Spacer[50], 
+           Rotate[$CellContext`element1, $CellContext`\[Theta]$$, {0.5, 0.5}], 
+           Spacer[50], 
+           Column[{
+             Style[
+              StringForm["\[Theta]:`` rad", $CellContext`\[Theta]$$], 16, 
+              "Label"], 
+             Style[
+              StringForm["\[Sigma]\[Theta]\[Theta]':`` ", 
+               NumberForm[
+                Derivative[1][$CellContext`\[Sigma]\[Theta]\[Theta]][
+                0, 0, $CellContext`\[Tau]\[Theta]z, $CellContext`\[Theta]$$], \
+{Infinity, 2}]], 16, "Label"], 
+             Style[
+              StringForm["\[Sigma]zz':`` ", 
+               NumberForm[
+                Derivative[1][$CellContext`\[Sigma]zz][
+                0, 0, $CellContext`\[Tau]\[Theta]z, $CellContext`\[Theta]$$], \
+{Infinity, 2}]], 16, "Label"], 
+             Style[
+              StringForm["\[Tau]\[Theta]z':`` ", 
+               
+               NumberForm[$CellContext`\[Tau]\[Theta]z 
+                Cos[2 $CellContext`\[Theta]$$], {Infinity, 2}]], 16, 
+              "Label"]}, Alignment -> Center]}}, Spacings -> {0, 100}]), 
+      "Specifications" :> {{{$CellContext`\[Theta]$$, 0}, 0, 2 Pi, 
+         Rational[1, 10] Pi}, {{$CellContext`Mt$$, 0}, 0, 20, 
+         0.01}, {{$CellContext`a$$, 0}, 0, 1, 0.01}, {{$CellContext`r$$, 0}, 
+         0, 0.1, 0.01}, {{$CellContext`z$$, 0}, 0, 1, 0.01}}, "Options" :> {},
+       "DefaultOptions" :> {}],
+     ImageSizeCache->{1110., {315., 321.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.921814034215289*^9, 3.9227206660545444`*^9, 
+  3.9227222392226124`*^9, 3.922722335106533*^9},
+ CellLabel->"Out[84]=",ExpressionUUID->"b08b43e0-4939-45fb-91f7-84bd2e9cea7c"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1520, 773},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification:>0.9 Inherited,
+FrontEndVersion->"12.0 for Microsoft Windows (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 211, 4, 87, "Title",ExpressionUUID->"8925dade-7544-4dd7-a368-98e123a32d44"],
+Cell[794, 28, 183, 3, 48, "Subtitle",ExpressionUUID->"86db4901-dd34-4bc7-aee7-bf03b2b28eff"],
+Cell[980, 33, 844, 21, 574, "Chapter",ExpressionUUID->"b5f51786-802c-4f25-90f8-f706d9133525"],
+Cell[CellGroupData[{
+Cell[1849, 58, 236, 6, 52, "Chapter",ExpressionUUID->"18d71db3-7856-4dbc-a731-03aa97548536"],
+Cell[CellGroupData[{
+Cell[2110, 68, 21110, 598, 1270, "Code",ExpressionUUID->"f836428c-1e82-46e3-bfc6-28cda8e15626"],
+Cell[23223, 668, 501, 11, 20, "Message",ExpressionUUID->"8bd6cb82-f71f-43f6-a24c-0394677b3953"],
+Cell[23727, 681, 9049, 164, 736, "Output",ExpressionUUID->"96bc65f1-1f0f-4e73-a334-e46ffbe71ef2"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32825, 851, 189, 4, 62, "Chapter",ExpressionUUID->"59b94e27-5a24-49d0-a6e6-34b1ca353b66"],
+Cell[CellGroupData[{
+Cell[33039, 859, 16106, 420, 726, "Code",ExpressionUUID->"7604b6be-67f6-4453-8bf7-e44d382e9690"],
+Cell[49148, 1281, 647, 13, 20, "Message",ExpressionUUID->"6b3681ac-d1c5-4ba9-bba4-c2a2ee575692"],
+Cell[49798, 1296, 5567, 115, 654, "Output",ExpressionUUID->"b08b43e0-4939-45fb-91f7-84bd2e9cea7c"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
