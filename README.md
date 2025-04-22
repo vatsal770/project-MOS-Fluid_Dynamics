@@ -4,43 +4,40 @@
 
 An intelligent and interactive Streamlit-based web application that allows users to upload files, automatically **transcribe**, **analyze**, and **extract summaries, decisions, follow-ups**, and more using **Whisper (OpenAI)** and **gemini-2.0-flash-exp** from Google.
 
+## Requirement of FFmpeg
+FFmpeg is a free and open-source software project consisting of a suite of libraries and programs for handling video, audio, and other multimedia files.
+Our app uses OpenAI's Whisper (transformers pipeline) for speech-to-text, which requires audio in specific formats (WAV/PCM).Also, When processing videos (MP4/MOV/AVI), FFmpeg extracts audio tracks from videos for transcription. Therefore, FFmpeg is important for handling these conversions.
+
 ### Interface View
 ![upload interface](images/upload-interface.png)
 
 ## Features
 
-- 🔊 **Audio Transcription** using Whisper ASR
-- 📹 **Video Understanding** via Gemini model with file upload
-- 🤖 Detailed AI-generated insights:
+- **Audio Transcription** using Whisper ASR (required)
+- **Video Understanding** via Gemini model (additional work done)
+- Detailed AI-generated insights:
   - Summary
   - Action items & decisions
   - Follow-up tasks
   - Confidence checks
   - Domain/topic detection
-- 📝 User-customizable prompt after initial analysis
-- 📥 Support for `.mp3`, `.wav`, `.ogg`, `.mp4`, `.mov`, `.avi`
-- 🌐 Lightweight and Docker-ready deployment
+- User-customizable prompt after required analyis (additional work done) 
+- Supported for `.mp3`, `.wav`, `.ogg`, `.mp4`, `.mov`, `.avi`
+- Lightweight
+  
 
----
+## Audio2Text Conversion — Whisper by OpenAI
 
-## 🧠 Audio2Text Conversion — Whisper by OpenAI
+Whisper is a general-purpose speech recognition model trained on a large dataset of multilingual and multitask supervised data collected from the web. Whisper officially supports 99 languages for trancription of speech, and can translate other 98 languages to english.
 
-Whisper is a general-purpose speech recognition model trained on a large dataset of multilingual and multitask supervised data collected from the web.
 
-### ✅ Why Whisper?
-
-- **Multilingual Support:** Transcribe audio in English, Hindi, French, and more
-- **Robustness:** Handles background noise and varied speech patterns
-- **Streaming & Timestamped Output:** Easy to extract actionable insights
-- **Lightweight Versions:** Supports "tiny" models that are fast and work on CPU
-
-### 🔄 Whisper vs Other ASR Models
+### Whisper vs Other ASR Models
 
 | Model           | Multilingual | Speed (tiny) | Accuracy | Timestamps | GPU Recommended |
 |----------------|--------------|--------------|----------|------------|------------------|
-| **Whisper**     | ✅ Yes       | ⚡ Fast       | 🔥 High   | ✅ Yes      | ❌ Optional      |
-| Wav2Vec2 (HF)   | ⚠️ Limited   | 🐢 Medium     | ✅ Good   | ❌ No       | ✅ Yes           |
-| Google Speech API | ✅ Yes     | ✅ Fast       | ✅ Good   | ❌ No       | ☁️ Cloud-only    |
+| **Whisper**     | Yes       | Fast       | High   | Yes      | Optional      |
+| Wav2Vec2 (HF)   | ⚠Limited   | Medium     | Good   | No       | Yes           |
+| Google Speech API | Yes     | Fast       | Good   | No       | Cloud-only    |
 
 ---
 
