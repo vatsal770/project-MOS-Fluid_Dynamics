@@ -106,3 +106,15 @@ brew install ffmpeg
 streamlit run main.py
 
 
+---
+
+### Future Work
+
+1. **Persistent User History with Database Integration**
+   - We can maintain logs of input media files and metadata, AI-generated responses (summaries, action items, decisions, etc.) and user questions and feedback.
+   - These can be leveraged for generating cumulative insights and detect themes or trends over time.
+
+2. **Analytics Dashboard**
+   - Add a visual dashboard using Plotly/Streamlit charts to show frequency of topics discussed, sentimental trends and domain classification stats over time
+Due to having a time constraint for this task, I will surely want to try out the future works.
+Overall the Exercise was fun and kept me interested into it, till the submission.
