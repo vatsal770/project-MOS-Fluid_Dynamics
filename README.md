@@ -104,7 +104,7 @@ brew install ffmpeg
 
 # Once everything is installed properly, we can launch the streamlit app
 streamlit run main.py
-
+'''
 
 
 ### Future Work
