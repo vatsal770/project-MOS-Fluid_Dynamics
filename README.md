@@ -57,14 +57,14 @@ gemini-2.0-flash-exp is one of the most **advanced multimodal LLMs** that suppor
 ### File Upload (Audio/Video)
 ![upload interface](images/upload-interface.png)
 
-### 🧠 AI-Generated Insights
+### AI-Generated Insights
 ![summary result](images/summary-insights.png)
 
-### 🗨️ User Prompt for Deeper Analysis
+### User Prompt for Deeper Analysis
 ![custom prompt](images/user-prompt.png)
 
 
-## 🛠️ How It Works
+## How It Works
 
 1. **Upload File**: User selects Audio or Video and uploads a file.
 2. **Initial Processing**:
@@ -81,4 +81,28 @@ gemini-2.0-flash-exp is one of the most **advanced multimodal LLMs** that suppor
 
 
 ### Load all the requirements
+
+Before running the app locally, make sure you have **Python ≥ 3.9** installed. Then, follow the steps below to install all dependencies and run the app.
+
+```bash
+# Create a virtual environment 
+python -m venv venv
+source venv/bin/activate   # On Windows use: venv\Scripts\activate
+
+# Install all required packages
+pip install -r requirements.txt
+
+# On Ubuntu/Debian
+sudo apt update && sudo apt install ffmpeg
+
+# On macOS using Homebrew
+brew install ffmpeg
+
+# On Windows
+# Download from: https://ffmpeg.org/download.html
+
+
+# Once everything is installed properly, we can launch the streamlit app
+streamlit run main.py
+
 
