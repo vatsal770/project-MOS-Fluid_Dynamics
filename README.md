@@ -8,20 +8,20 @@ An intelligent and interactive Streamlit-based web application that allows users
 FFmpeg is a free and open-source software project consisting of a suite of libraries and programs for handling video, audio, and other multimedia files.
 Our app uses OpenAI's Whisper (transformers pipeline) for speech-to-text, which requires audio in specific formats (WAV/PCM).Also, When processing videos (MP4/MOV/AVI), FFmpeg extracts audio tracks from videos for transcription. Therefore, FFmpeg is important for handling these conversions.
 
-### Interface View
+### App Interface
 ![upload interface](images/upload-interface.png)
 
 ## Features
 
-- **Audio Transcription** using Whisper ASR (required)
-- **Video Understanding** via Gemini model (additional work done)
+- **Audio Transcription** using Whisper ASR (**required**)
+- **Video Understanding** via Gemini model (**additional work done**)
 - Detailed AI-generated insights:
   - Summary
   - Action items & decisions
   - Follow-up tasks
   - Confidence checks
   - Domain/topic detection
-- User-customizable prompt after required analyis (additional work done) 
+- User-customizable prompt after required analyis (**additional work done**) 
 - Supported for `.mp3`, `.wav`, `.ogg`, `.mp4`, `.mov`, `.avi`
 - Lightweight
   
@@ -53,9 +53,8 @@ gemini-2.0-flash-exp is one of the most **advanced multimodal LLMs** that suppor
 | Claude 3       | Yes     | Long          | Okay   | Limited      | 
 
 
-## 📸 App Interface (Screenshots)
 
-### 📤 File Upload (Audio/Video)
+### File Upload (Audio/Video)
 ![upload interface](images/upload-interface.png)
 
 ### 🧠 AI-Generated Insights
@@ -64,7 +63,6 @@ gemini-2.0-flash-exp is one of the most **advanced multimodal LLMs** that suppor
 ### 🗨️ User Prompt for Deeper Analysis
 ![custom prompt](images/user-prompt.png)
 
----
 
 ## 🛠️ How It Works
 
@@ -74,18 +72,13 @@ gemini-2.0-flash-exp is one of the most **advanced multimodal LLMs** that suppor
    - Video: Uploaded and pre-processed for Gemini
 3. **Gemini Agent Response**:
    - Generates structured insights:
-     - 📋 Summary
-     - ✅ Action items / decisions
-     - 📅 Follow-ups
-     - 📊 Confidence level
-     - 🔍 Domain detection
+     - Summary
+     - Action items / decisions
+     - Follow-ups
+     - Confidence level
+     - Domain detection
 4. **User Prompt (Optional)**: Allows further custom questioning after initial analysis.
 
----
 
-## 📦 Installation & Run
+### Load all the requirements
 
-### 🚀 Run with Docker
-```bash
-docker build -t multimodal-agent-app .
-docker run -p 8501:8501 multimodal-agent-app
