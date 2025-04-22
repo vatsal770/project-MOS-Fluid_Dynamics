@@ -36,31 +36,22 @@ Whisper is a general-purpose speech recognition model trained on a large dataset
 | Model           | Multilingual | Speed (tiny) | Accuracy | Timestamps | GPU Recommended |
 |----------------|--------------|--------------|----------|------------|------------------|
 | **Whisper**     | Yes       | Fast       | High   | Yes      | Optional      |
-| Wav2Vec2 (HF)   | ⚠Limited   | Medium     | Good   | No       | Yes           |
+| Wav2Vec2 (HF)   | Limited   | Medium     | Good   | No       | Yes           |
 | Google Speech API | Yes     | Fast       | Good   | No       | Cloud-only    |
 
----
 
-## 🌟 Gemini 1.5 Pro — Why This Model?
+## gemini-2.0-flash-exp Model
 
-Gemini 1.5 Pro is one of the most **advanced multimodal LLMs** that supports **video, text, audio, and image** inputs. It allows deeper reasoning and longer context windows, making it a perfect fit for analyzing full-length videos or rich transcriptions.
+gemini-2.0-flash-exp is one of the most **advanced multimodal LLMs** that supports **video, text, and image** inputs. Google gemini is considered to be a better storyteller than other open-source models, making it a good fit for analyzing full-length videos or long transcriptions. Also, DuckDuckGo tool is used for doing real-time web search for giving supplement information, with main advantage being open-sourced.
 
-### ✅ Why Gemini?
+### Gemini vs Other LLMs
 
-- 🔍 **Long Context:** Handle long audio/video inputs easily
-- 🔗 **Multimodal Capability:** Seamlessly processes both text and video
-- 🧠 **Advanced Reasoning:** Extract decisions, summarize, detect intent, and more
-- 🛠️ **Integrates with Tools:** Like DuckDuckGo for supplemental info
+| Model         | Multimodal | Context Length | Reasoning | Video Support | 
+|---------------|------------|----------------|-----------|----------------|
+| **gemini-2.0-flash** | Yes     | Long (1M tokens) | Strong | Yes         | 
+| GPT-4 (OpenAI) | Partial | Medium        | Strong | No           | 
+| Claude 3       | Yes     | Long          | Okay   | Limited      | 
 
-### 🔄 Gemini vs Other LLMs
-
-| Model         | Multimodal | Context Length | Reasoning | Video Support | Real-time Capable |
-|---------------|------------|----------------|-----------|----------------|-------------------|
-| **Gemini 1.5 Pro** | ✅ Yes     | 🔁 Long (1M tokens) | 🧠 Strong | ✅ Yes         | ✅ Yes            |
-| GPT-4 (OpenAI) | 🟡 Partial | 🔁 Medium        | 🧠 Strong | 🛑 No           | ✅ Yes            |
-| Claude 3       | ✅ Yes     | ✅ Long          | 🧠 Good   | 🟡 Limited      | ✅ Yes            |
-
----
 
 ## 📸 App Interface (Screenshots)
 
