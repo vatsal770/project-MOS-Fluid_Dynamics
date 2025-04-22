@@ -88,7 +88,9 @@ gemini-2.0-flash-exp is one of the most **advanced multimodal LLMs** that suppor
 
 2. **Analytics Dashboard**
    - Add a visual dashboard using Plotly/Streamlit charts to show frequency of topics discussed, sentimental trends and domain classification stats over time
+
 Due to having a time constraint for this task, I will surely want to try out the future works.
+
 Overall the Exercise was fun and kept me interested into it, till the submission.
 
 
