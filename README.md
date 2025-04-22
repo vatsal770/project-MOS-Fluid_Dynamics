@@ -106,7 +106,6 @@ brew install ffmpeg
 streamlit run main.py
 
 
----
 
 ### Future Work
 
