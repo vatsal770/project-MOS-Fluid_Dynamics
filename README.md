@@ -1,22 +1,41 @@
 # project-MOS-Fluid_Dynamics
 
 
-# 🔐 Password Management System
+# Password Management System
 
-A simple, console-based password manager built using Python and data structures. This project demonstrates the use of object-oriented programming, file handling, and basic data manipulation in Python. It securely stores, retrieves, updates, and deletes passwords for various websites using a master key for authentication.
+A simple, console-based password manager made using Python. This mini-project uses object-oriented programming, and file handling in Python. It securely stores, retrieves, updates, and deletes passwords for various websites using a master key for authentication.
+
+---
+
+## Features
+
+- **Master Key Authentication**
+- **Stores Passwords in JSON File**
+- **Add New Passwords**
+- **Update Existing Passwords**
+- **Search Passwords by Website**
+- **Remove Stored Passwords**
+- **View All Stored Passwords**
+- **Auto Save on Exit**
 
 ---
 
-## 📁 Features
+## Setup Instructions
 
-- 🔑 **Master Key Authentication**
-- 🧠 **Stores Passwords in JSON File**
-- ➕ **Add New Passwords**
-- ♻️ **Update Existing Passwords**
-- 🔍 **Search Passwords by Website**
-- ❌ **Remove Stored Passwords**
-- 📃 **View All Stored Passwords**
-- 💾 **Auto Save on Exit**
+1. **Clone the Repository**
 
----
+```bash
+git clone https://github.com/your-username/password-manager.git
+cd password-manager
+```
+2. **Run the Application**
+
+python password_manager.py
+
+3. **Enter MasterKey**
+
+- The default master key is: User110
+
+4. **Choose one action from the Options**
+
 
