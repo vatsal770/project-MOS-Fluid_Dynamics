@@ -57,6 +57,13 @@ python main.py
 
 4. **Choose one action from the Options**
 
+  1. Add password
+  2. Update password
+  3. Search password
+  4. Remove password
+  5. View all passwords
+  6. Save and Exit
+
 ---
 
 ## Sample Interaction Page:
