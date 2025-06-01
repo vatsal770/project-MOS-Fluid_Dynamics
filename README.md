@@ -61,7 +61,7 @@ python password_manager.py
 
 Sample Interaction Page:
 
-![Sample Run Screenshot](sample_run.png)
+![Sample Run Screenshot](sample_run)
 
 ---
 
