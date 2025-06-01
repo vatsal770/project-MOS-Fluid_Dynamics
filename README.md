@@ -61,25 +61,7 @@ python password_manager.py
 
 Sample Interaction Page:
 
-Enter master key: User110
 
-Welcome!
-Choose an option from the below list:
-1. Add password
-2. Update password
-3. Search password
-4. Remove password
-5. View all passwords
-6. Save and Exit
-
-Choose from 1-6 : 1
-Enter website_name and password(with space in-between): Swiggy foody48
-
-Password added Successfully
-
-Choose from 1-6 : 6
-
-Data Saved Successfully!
 
 ---
 
