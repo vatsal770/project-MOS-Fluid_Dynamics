@@ -44,12 +44,12 @@ A simple, console-based password manager made using Python. This mini-project us
 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/your-username/password-manager.git
-cd password-manager
+git clone https://github.com/vatsal770/Mini_Projects.git
+cd Password_Management_System
 ```
 2. **Run the Application**
 ```bash
-python password_manager.py
+python main.py
 ```
 3. **Enter MasterKey**
 
@@ -59,7 +59,7 @@ python password_manager.py
 
 ---
 
-Sample Interaction Page:
+## Sample Interaction Page:
 
 ![Sample Run Screenshot](Sample_run.png)
 
