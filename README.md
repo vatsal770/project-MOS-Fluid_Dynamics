@@ -43,8 +43,8 @@ An interactive **Streamlit app** which lets users explore house listings by city
 1. **Clone the Repo**
 
 ```bash
-git clone https://github.com/your-username/house-price-predictor.git
-cd house-price-predictor
+git clone https://github.com/vatsal770/Mini_Projects.git
+cd House Explorer and Price Predictor
 ```
 
 2. **Install Dependencies**
@@ -66,7 +66,7 @@ streamlit run app.py
 ---
 
 ## Dataset Visualizer (Notebook)
-We have included a Jupyter Notebook to help understand the data visually.
+I have included a Jupyter Notebook to help understand the data visually.
 
 ---
 
