@@ -1,73 +1,38 @@
 # project-MOS-Fluid_Dynamics
 
 
-# House Explorer & Price Predictor
+## 📁 Projects Included
 
-An interactive **Streamlit app** which lets users explore house listings by city, area, BHK, and price range — and also predict the price of a new property based on BHK, area, and city using a regression technique.
+### 1. Password Management System 
 
----
+A secure password manager developed in Python using OOP principles and file handling. It allows the user to store, update, search, view, and delete passwords for different websites. The system uses a **master key** for authentication and stores data in a JSON file.
 
-## Features
+#### 🔹 Features:
+- Master Key Authentication
+- Add / Update / Search / Remove / View Passwords
+- Auto-save on exit
+- All data stored locally in JSON format
 
-- **Dual Interface**:
-  - **Property Explorer**: Filter houses by city, BHK, area, and price.
-  - **Price Predictor**: Predict price based on BHK, area, and location.
-- **Data Cleaning**:
-  - Removes invalid/missing entries and filters extreme values.
-- **ML Model**:
-  - Trains a Linear Regression model dynamically based on city-specific listings.
-
----
-
-## Tech Used
-
-- Python
-- Streamlit
-- Pandas & NumPy
-- Scikit-learn (for Regression)
-- Jupyter Notebook (for Data Analysis)
+#### 📂 File Location:
+Passwords are stored at:  
+`C:\Users\Public\Downloads\password.json`
 
 ---
 
-## Dataset Preprocessing
+### 2. 🏠 House Explorer & Price Predictor (Streamlit App)
+A Streamlit-based web application that:
 
-- Drops irrelevant or duplicate columns: `POSTED_BY`, `UNDER_CONSTRUCTION`, `RERA`
-- Extracts city names from full addresses
-- Removes missing values and duplicates
-- Filters invalid data (e.g., price > 600 Lacs, BHK > 10, area > 6000 sqft)
+- Explores house listings from a dataset (filtered by city, BHK, area, and price).
 
----
+- Predicts house prices using Linear Regression based on user input.
 
-## Setup Instructions
+#### 🔹 Features:
+Dual Mode: Explorer and Predictor
 
-1. **Clone the Repo**
+Data cleaning and anomaly filtering
 
-```bash
-git clone https://github.com/vatsal770/Mini_Projects.git
-cd House Explorer and Price Predictor
-```
+Live price prediction using sklearn’s LinearRegression
 
-2. **Install Dependencies**
-```bash
-pip install -r requirements.txt
-```
+Interactive UI with filters for BHK, Area, City, Price
 
-3. **Run the App**
-```bash
-streamlit run app.py
-```
-
----
-
-## Sample of the App:
-
-![Sample App Screenshot](Sample_run1.png)
-
----
-
-## Dataset Visualizer (Notebook)
-I have included a Jupyter Notebook to help understand the data visually.
-
----
-
----
+Dataset Visualizer: Also includes a Jupyter Notebook (visualizer.ipynb) for Data analysis and preprocessing insights.
